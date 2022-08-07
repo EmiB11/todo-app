@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+ import {useState ,useEffect , useContext} from 'react'
+ import { DndProvider } from 'react-dnd'
+ import { HTML5Backend } from 'react-dnd-html5-backend'
+import { StoreContext } from './store/storeProvider';
+import Todos from './components/Todos'
+import CreateTodo from './components/CreateTodo';
+import Footer from './components/Footer'
 import './App.css';
 
+
+
 function App() {
+  const [mode , setMode] = useState('dark');
+ const [store , dispatch] = useContext(StoreContext);
+ const {tasks} = store;
+
+  useEffect(()=>{
+
+  },[mode, tasks ])
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+    <CreateTodo mode={mode} setMode={setMode} dispatch={dispatch} tasks={tasks}/>
+    <DndProvider backend={HTML5Backend}>
+     <Todos tasks={tasks} dispatch={dispatch}/>
+     </DndProvider>
+     <Footer />
     </div>
   );
 }

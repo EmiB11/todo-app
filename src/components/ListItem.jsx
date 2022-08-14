@@ -1,8 +1,13 @@
 import React ,{useRef} from 'react'
 import { useDrop, useDrag } from "react-dnd";
 import deleteIcon from '../images/Close Square.svg'
-function ListItem({text , index , moveListItem , id , deleteTask}) {
-
+function ListItem({text , index , moveListItem , id , deleteTask , dispatch , completed , mode}) {
+   
+  const handleCheck = (e)=>{
+      dispatch({type:"CHECK" , payload: id})
+      
+     
+  }
 
     const ref = useRef(null)
   const [{ handlerId }, drop] = useDrop({
@@ -63,9 +68,9 @@ function ListItem({text , index , moveListItem , id , deleteTask}) {
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
-     <div className="todo-box" ref={ref} style={{ opacity }} >
-       <input type="checkbox" id="task" name="task" value='task' />
-         <span id='spanTask'>{text}</span>
+     <div className={`todo-box ${mode}--mode-todo-box`}  style={mode === 'dark' ? {backgroundColor:'black' , color: 'white'  , opacity} : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)'  ,opacity}} ref={ref}  >
+       <input type="checkbox" id="task" name="task" value='task' onChange={handleCheck} checked={completed} />
+         <span id='spanTask' style={completed ? {textDecoration:"line-through"} : {textDecoration:"none"}}>{text}</span>
             <button id='delete' onClick={()=> deleteTask(id)} ><img src={deleteIcon} alt='delete' /></button>
      </div> 
   )

@@ -14,17 +14,18 @@ function App() {
  const [store , dispatch] = useContext(StoreContext);
  const {tasks} = store;
 
+ 
   useEffect(()=>{
-
+   
   },[mode, tasks ])
 
   
 
   return (
-    <div className="main">
+    <div className={`main ${mode}--mode-body`}>
     <CreateTodo mode={mode} setMode={setMode} dispatch={dispatch} tasks={tasks}/>
     <DndProvider backend={HTML5Backend}>
-     <Todos tasks={tasks} dispatch={dispatch}/>
+     <Todos mode={mode} tasks={tasks} dispatch={dispatch}/>
      </DndProvider>
      <Footer />
     </div>

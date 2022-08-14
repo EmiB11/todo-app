@@ -15,6 +15,7 @@ const storeReducer = (state = initialState ,action) =>{
     }
     case 'FILTER_TASK_COMPLETED': 
       const completed = state.filterTask.filter(todo => todo.completed === true)
+      
     return {
         ...state,
         tasks: completed.length > 0 ? completed : [{todo: "No hay tareas completadas" , completed: false}]
@@ -32,11 +33,16 @@ const storeReducer = (state = initialState ,action) =>{
             tasks: state.filterTask
         }
     case 'DELETE_ALL_TASKS': 
-      localStorage.removeItem('task')    
-    return initialState
+     const deleteCompleted = state.tasks.filter( todo => todo.completed !== true )
+     saveTasksLocalStorage(deleteCompleted)
+    return {
+      ...state,
+      tasks: deleteCompleted,
+      filterTask:deleteCompleted
+    }
     
     case 'DELETE_TASK':
-        console.log(action.payload)
+       
        const deleteTask = state.tasks.filter(todo  => todo.id !== action.payload )
        saveTasksLocalStorage(deleteTask)
        return{
@@ -44,7 +50,22 @@ const storeReducer = (state = initialState ,action) =>{
          tasks: deleteTask,
          filterTask: deleteTask
        }
-
+    case 'DRAG_AND_DROP': return {
+      ...state,
+      tasks: action.payload
+    }
+    case "CHECK": 
+      const checkTask = state.tasks.map(task => {
+         if(task.id === action.payload) return {...task , completed: !task.completed}
+         return task
+      })
+     
+    return {
+      ...state,
+       tasks: checkTask,
+       filterTask: checkTask
+       
+    }
     default: return state
   }
 }

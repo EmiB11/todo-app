@@ -1,22 +1,22 @@
-import React, {useState,useCallback } from 'react'
+import React, {useState,useCallback, useEffect } from 'react'
 
 import ListItem from './ListItem'
-function Todos({tasks ,dispatch}) {
+function Todos({tasks ,dispatch , mode}) {
 const [todo , setTodo] = useState(tasks)
  
 const moveTask = useCallback(
   (dragIndex, hoverIndex) => {
-      const dragItem = todo[dragIndex]
-      const hoverItem = todo[hoverIndex]
+      const dragItem = tasks[dragIndex]
+      const hoverItem = tasks[hoverIndex]
       // Swap places of dragItem and hoverItem in the pets array
-      setTodo(todo => {
-          const updatedTask = [...todo]
+      
+          const updatedTask = [...tasks]
           updatedTask[dragIndex] = hoverItem
           updatedTask[hoverIndex] = dragItem
-          return updatedTask
-      })
+          dispatch({type:"DRAG_AND_DROP" , payload: updatedTask}) 
+      
   },
-  [todo],
+  [tasks],
 )
 
 
@@ -40,12 +40,14 @@ const filterTodos = (e) =>{
     console.log(index)
      dispatch({type:'DELETE_TASK' , payload: index})
   }
+useEffect(()=> {
 
+},[todo ])
 
   return (
-    <div className="todo-body">
-        <div className="todos-box">
-          <div className="draggable-list todos"></div>
+    <div className="todo-body" >
+        <div className={`todos-box `}>
+          <div className={`draggable-list todos `}></div>
             { !tasks?.length
             ?<p id='spanNoTask' className='todo-box'>Agregue una tarea</p>
             
@@ -57,18 +59,21 @@ const filterTodos = (e) =>{
                    id = {task.id}
                    moveListItem= {moveTask}
                    deleteTask= {deleteTask}
+                   dispatch = {dispatch}
+                   completed = {task.completed}
+                   mode= {mode}
                />
             )}
-          <div className="todo-box-filter">
-            <div className="todo-box__sorter">
+          <div className={`todo-box-filter `} style={mode === 'dark' ? {backgroundColor:'black' , color: 'hsl(234, 39%, 85%)' } : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)' }}>
+            <div className={`todo-box__sorter  `}>
               <div className="todo-counter"><p>{tasks.length} Tareas</p></div>
               <div className="todo-sorter sorters">
-                <p className="filter item"  onClick={filterTodos}>Todas</p>
-                <p className="filter item" onClick={filterTodos} >Activas</p>
-                <p className="filter item" onClick={filterTodos}>Completadas</p>
+                <p className= {`filter item  ${mode}--mode-filter`}  onClick={filterTodos}>Todas</p>
+                <p className= {`filter item  ${mode}--mode-filter`} onClick={filterTodos} >Activas</p>
+                <p className= {`filter item  ${mode}--mode-filter`} onClick={filterTodos}>Completadas</p>
               </div>
               <div className="todo-clearer">
-                <p className="filter"onClick={deleteAll}>Eliminar completados</p>
+                <p className={`filter ${mode}--mode-filter`} onClick={deleteAll}>Eliminar completados</p>
               </div>
             </div>
           </div>

@@ -21,11 +21,14 @@ body {
 .light--mode-body{
   background-color: hsl(236, 33%, 92%);
   color:  hsl(235, 19%, 35%);
+  min-height: 100vh;
+
 }
 
 .dark--mode-body{
   background-color: hsl(235, 21%, 11%);
   color: hsl(234, 39%, 85%);
+  min-height: 100vh;
 }
 
 .header{
@@ -63,10 +66,13 @@ nav{
   border-bottom-right-radius: .3rem;
 }
 
-.btn-add img{
+.btn-add img {
   width: 20px;
   height: 10px;
+  color:black;
 }
+
+
 
 .light--mode-input{
   border :0px solid hsl(0, 0%, 98%);
@@ -194,7 +200,8 @@ footer{
 }
 
 .filter:hover{
-  cursor: pointer;  
+  cursor: pointer;
+  
 }
 
 .light--mode-filter:hover{
@@ -267,9 +274,9 @@ footer{
   .logo p {
     text-transform: uppercase;
     color: #fff;
-    font-size: 2.4rem;
+    font-size: 25px;
     letter-spacing: 7px;
-    font-weight: 700;
+    font-weight: 600;
   }
   .input-box input{
     font-size: 13px;

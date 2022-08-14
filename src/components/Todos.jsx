@@ -49,7 +49,7 @@ useEffect(()=> {
         <div className={`todos-box `}>
           <div className={`draggable-list todos `}></div>
             { !tasks?.length
-            ?<p id='spanNoTask' className='todo-box'>Agregue una tarea</p>
+            ?<p id='spanNoTask' className='todo-box' style={mode === 'dark' ? {backgroundColor:'black' , color: 'hsl(234, 39%, 85%)' } : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)' }}>Agregue una tarea</p>
             
             : tasks?.map((task , i) =>
                <ListItem 
@@ -66,7 +66,7 @@ useEffect(()=> {
             )}
           <div className={`todo-box-filter `} style={mode === 'dark' ? {backgroundColor:'black' , color: 'hsl(234, 39%, 85%)' } : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)' }}>
             <div className={`todo-box__sorter  `}>
-              <div className="todo-counter"><p>{tasks.length} Tareas</p></div>
+              <div className="todo-counter"><p>{tasks.length} {tasks.length < 2 ? 'Tarea' : 'Tareas'}</p></div>
               <div className="todo-sorter sorters">
                 <p className= {`filter item  ${mode}--mode-filter`}  onClick={filterTodos}>Todas</p>
                 <p className= {`filter item  ${mode}--mode-filter`} onClick={filterTodos} >Activas</p>

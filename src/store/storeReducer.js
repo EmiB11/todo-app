@@ -1,7 +1,8 @@
 import { getTasksLocalStorage,saveTasksLocalStorage } from '../localstorage/localStorage';
 const initialState = {
     tasks : getTasksLocalStorage(),
-    filterTask: getTasksLocalStorage()
+    filterTask: getTasksLocalStorage(),
+    noTasks: null
 }
 
 const storeReducer = (state = initialState ,action) =>{
@@ -18,14 +19,18 @@ const storeReducer = (state = initialState ,action) =>{
       
     return {
         ...state,
-        tasks: completed.length > 0 ? completed : [{todo: "No hay tareas completadas" , completed: false}]
+        //tasks: completed.length > 0 ? completed : [{todo: "No hay tareas completadas" , completed: false}]
+        tasks:completed,
+        noTasks: "No hay tareas completadas"
 
     }
     case 'FILTER_TASK_ACTIVES':
         const actives = state.filterTask.filter(todo => todo.completed === false)
         return {
          ...state,
-         tasks:  actives.length > 0 ?  actives : [{todo: "No hay tareas activas" , completed: false}]
+         // tasks:  actives.length > 0 ?  actives : [{todo: "No hay tareas activas" , completed: false}],
+         tasks: actives,
+         noTasks: "No hay tareas activas"
         }
     case 'FILTER_TASK_DEFAULT':
         return{

@@ -12,7 +12,7 @@ import './App.css';
 function App() {
   const [mode , setMode] = useState('dark');
  const [store , dispatch] = useContext(StoreContext);
- const {tasks} = store;
+ const {tasks ,noTasks} = store;
 
  
   useEffect(()=>{
@@ -25,7 +25,7 @@ function App() {
     <div className={`main ${mode}--mode-body`}>
     <CreateTodo mode={mode} setMode={setMode} dispatch={dispatch} tasks={tasks}/>
     <DndProvider backend={HTML5Backend}>
-     <Todos mode={mode} tasks={tasks} dispatch={dispatch}/>
+     <Todos mode={mode} tasks={tasks} dispatch={dispatch} noTasks={noTasks}/>
      </DndProvider>
      <Footer />
     </div>

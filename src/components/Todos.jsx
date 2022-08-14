@@ -1,7 +1,7 @@
 import React, {useState,useCallback, useEffect } from 'react'
 
 import ListItem from './ListItem'
-function Todos({tasks ,dispatch , mode}) {
+function Todos({tasks ,dispatch , mode , noTasks}) {
 const [todo , setTodo] = useState(tasks)
  
 const moveTask = useCallback(
@@ -49,7 +49,10 @@ useEffect(()=> {
         <div className={`todos-box `}>
           <div className={`draggable-list todos `}></div>
             { !tasks?.length
-            ?<p id='spanNoTask' className='todo-box' style={mode === 'dark' ? {backgroundColor:'black' , color: 'hsl(234, 39%, 85%)' } : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)' }}>Agregue una tarea</p>
+            ?<p id='spanNoTask' className='todo-box' style={mode === 'dark' ? {backgroundColor:'black' , color: 'hsl(234, 39%, 85%)' } : {backgroundColor:'white' , color:'hsl(235, 19%, 35%)' }}>
+              {noTasks === null ? 'Agregue una tarea' : noTasks}
+            
+            </p>
             
             : tasks?.map((task , i) =>
                <ListItem 

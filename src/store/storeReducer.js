@@ -21,7 +21,7 @@ const storeReducer = (state = initialState ,action) =>{
         ...state,
         //tasks: completed.length > 0 ? completed : [{todo: "No hay tareas completadas" , completed: false}]
         tasks:completed,
-        noTasks: "No hay tareas completadas"
+        noTasks: !completed.length ? "No hay tareas completadas" : null
 
     }
     case 'FILTER_TASK_ACTIVES':
@@ -30,7 +30,7 @@ const storeReducer = (state = initialState ,action) =>{
          ...state,
          // tasks:  actives.length > 0 ?  actives : [{todo: "No hay tareas activas" , completed: false}],
          tasks: actives,
-         noTasks: "No hay tareas activas"
+         noTasks: !actives.length ? "No hay tareas activas" : null
         }
     case 'FILTER_TASK_DEFAULT':
         return{
@@ -53,7 +53,8 @@ const storeReducer = (state = initialState ,action) =>{
        return{
          ...state,
          tasks: deleteTask,
-         filterTask: deleteTask
+         filterTask: deleteTask,
+         noTasks: deleteTask.length ? state.noTasks : null
        }
     case 'DRAG_AND_DROP': return {
       ...state,
